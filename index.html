@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>You Got This! 💪</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to top right, #fceabb, #f8b500);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      color: #333;
+      overflow: hidden;
+      padding: 20px;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 2rem 2.5rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      max-width: 500px;
+      width: 100%;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+    #intro h1 {
+      font-size: 1.8rem;
+      color: #ff8c00;
+    }
+    p {
+      font-size: 1.2rem;
+      margin: 1rem 0;
+      min-height: 60px;
+      color: #333;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    button {
+      background: linear-gradient(45deg, #FFA500, #FFD700);
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.3s ease;
+      font-family: inherit;
+    }
+    button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(45deg, #FFD700, #FFA500);
+    }
+    #yesBtn {
+      background:linear-gradient(45deg, #FFA500, #FFD700);
+      color: #ffffff;
+    }
+    #noBtn {
+      background:linear-gradient(45deg, #FFA500, #FFD700);
+      color: #ffffff;
+    }
+    #convinceBtn {
+      margin-top: 1rem;
+      background: #ffd700;
+      color: #8b4513;
+    }
+    #nextBtn {
+      background: #fff;
+      color: #333;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    #nextBtn:hover {
+      background: #ffde59;
+    }
+    #billieGif {
+      display: none;
+      max-width: 300px;
+      margin: 20px auto;
+      border-radius: 10px;
+    }
+    audio {
+      position: fixed;
+      bottom: 15px;
+      left: 15px;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Intro section -->
+    <div id="intro">
+      <h1>Do you wanna hear a little story to get you through finals...? </h1>
+      <div class="buttons">
+        <button id="yesBtn">Yes! 🥹</button>
+        <button id="noBtn">Nah 😾</button>
+      </div>
+      <img id="billieGif" src="https://media.giphy.com/media/upvpAcUYf0bJtCsf9h/giphy.gif?cid=ecf05e479acwcjdiibzyzblozurc262v15kcin2zphqljd18&ep=v1_gifs_search&rid=giphy.gif&ct=g" alt="Billie Crying">
+    </div>
+    <!-- Main motivation section, hidden initially -->
+    <div id="main" style="display: none;">
+      <h1>You Got This! 💪</h1>
+      <p id="message">Once upon a time, there was a brilliant soul. </p>
+      <button id="nextBtn" onclick="nextMessage(); playSound()">➡️</button>
+    </div>
+  </div>
+
+  <script>
+    // Messages array
+    const messages = [
+      "Once upon a time, there was a brilliant soul.",
+      "She was strong, kind, and had the courage to chase dreams. 🐻✨",
+      "Final exams came along, and she faced them with grace and power. ⚡",
+      "Even on hard days, she never gave up. Every step forward mattered. 🧠💖",
+      "She studied, rested, tried again, and believed in herself.",
+      "Her future self whispered: 'I’m so proud of you already.' 💫",
+      "One day, She looked back and said: 'I did it!' ",
+      "And she lived happily, brilliantly, and confidently ever after.",
+      "Oh wait I think I was talking about your future self",
+      "Final exams can be scary, but you’re scarier Maloka.😤✨",
+      "Even Wi-Fi signals envy your strength. 📶✨",
+      "You’ve studied, grown, and now it’s your time to slay.",
+      "📚 You Got This, Bestie! 💕",
+      "I’m so proud of you already Maloka. 🥹💫"
+      ];
+    let currentIndex = 0;
+    const introDiv = document.getElementById('intro');
+    const mainDiv = document.getElementById('main');
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const billieGif = document.getElementById('billieGif');
+    const messageEl = document.getElementById('message');
+
+    // Show messages by cycling with button clicks
+    function nextMessage() {
+      currentIndex = (currentIndex + 1) % messages.length;
+      messageEl.innerText = messages[currentIndex];
+    }
+    // Play button click sound
+    function playSound() {
+      const sound = new Audio('https://voca.ro/1gaRNVOqdMKH');
+      sound.play().catch(()=>{/*ignore playback errors*/});
+    }
+    // When user clicks Yes
+    yesBtn.addEventListener('click', () => {
+      introDiv.style.display = 'none';
+      mainDiv.style.display = 'block';
+      // initialize first message
+      currentIndex = 0;
+      messageEl.innerText = messages[0];
+    });
+    // When user clicks No
+    noBtn.addEventListener('click', () => {
+      // hide Yes/No buttons
+      document.querySelector('#intro .buttons').style.display = 'none';
+      billieGif.style.display = 'block';
+      // add a convince button
+      const convinceBtn = document.createElement('button');
+      convinceBtn.id = 'convinceBtn';
+      convinceBtn.textContent = 'OK fine tell me 😿';
+      convinceBtn.onclick = () => {
+        billieGif.style.display = 'none';
+        convinceBtn.remove();
+        introDiv.style.display = 'none';
+        mainDiv.style.display = 'block';
+        currentIndex = 0;
+        messageEl.innerText = messages[0];
+      };
+      document.querySelector('.container').appendChild(convinceBtn);
+    });
+
+// Floating emojis in background
+    function spawnEmojis() {
+      const emojis = ["📚","💪","🌟","🔥","🧠","✍️","📖"];
+      for (let j = 0; j < 30; j++) {
+        const span = document.createElement("span");
+        span.className = "emoji";
+        span.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        span.style.left = Math.random() * 100 + "vw";
+        span.style.animationDuration = (Math.random() * 3 + 3) + "s";
+        document.body.appendChild(span);
+      }
+    }
+  </script>
+
+  <!-- Background instrumental music (no vocals) -->
+  <audio autoplay loop>
+    <source src="https://voca.ro/1gaRNVOqdMKH" type="
